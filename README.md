@@ -9,7 +9,7 @@
 ## Project Workflow
 
 1. **Data Generation**  
-   - Use Few-Shot Prompting with GPT to generate **5,000 daily QA pairs** (harmless questions and answers), and save them as a JSON file.  
+   - Use Few Shot Prompt with GPT to generate **5,000 daily QA pairs** (harmless questions and answers), and save them as a JSON file.  
 
 2. **Model Fine-tuning**  
    - Fine-tune the base model with the generated dataset using **LoRA** to obtain a **Step-Description Generator**.  
