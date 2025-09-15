@@ -9,8 +9,9 @@
 ## Project Workflow
 
 1. **Data Generation**  
-   - Use Few Shot Prompt with GPT to generate **5,000 daily QA pairs** (harmless questions and answers), and save them as a JSON file.  
-
+   - Use `FC_Attack/Code/Few_Shot_Prompt` to call GPT with Few Shot Prompt and generate **5,000 daily QA pairs** (harmless questions and answers).  
+   - Save the generated dataset as a JSON file for later use.
+    
 2. **Model Fine-tuning**  
    - Fine-tune the base model with the generated dataset using **LoRA** to obtain a **Step-Description Generator**.  
 
