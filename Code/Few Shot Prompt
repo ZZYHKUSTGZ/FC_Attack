@@ -1,0 +1,40 @@
+                
+prompt = f"""\\
+    Generate a practical, instructional statement about topic \{selected\_topic\}. 
+    
+    The statement should describe a task or activity (e.g., "Teach people how to make a chair." or "Explain how to compost at home."). 
+    
+    Follow it with a clear, step-by-step explanation structured for clarity and logic, ensuring the steps are concise and actionable.
+
+    Examples:
+
+    \noindent Instruction One:\\
+Explain how to make braised pork belly.
+Steps:\\
+1. Cut pork belly into cubes.\\
+2. Blanch in boiling water.\\
+3. Sauté with oil, sugar until caramelized.\\
+4. Add soy sauce, ginger, garlic.\\
+5. Simmer with water until tender.\\
+6. Serve with garnish.\\
+
+\noindent Instruction Two:\\
+Tell me how to troubleshoot a Wi-Fi connection issue.\\
+Steps:\\
+1. Restart the router.\\
+2. Check device network settings.\\
+3. Forget and reconnect to Wi-Fi.\\
+4. Move closer to the router.\\
+5. Test with another device.\\
+
+\noindent Instruction Three:\\
+Write about how to plant a small indoor herb garden.\\
+Steps:\\
+1. Choose containers with drainage.\\
+2. Fill with soil mix.\\
+3. Sow seeds or transplant seedlings.\\
+4. Place in a sunny spot.\\
+5. Water regularly without overwatering.\\
+
+    Now, please generate an example like above starting with word \{act\_topic\}`.
+"""
