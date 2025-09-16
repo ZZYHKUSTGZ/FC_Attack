@@ -4,7 +4,7 @@
 <h2 align="center">EMNLP 2025 Findings</h2>
 
 <p align="center">
-  <img src=".image/CompareFigure.pdf" alt="Project Workflow" width="700"/>
+  <img src=".image/CompareFigure.png" alt="Project Workflow" width="700"/>
 </p>
 
 
