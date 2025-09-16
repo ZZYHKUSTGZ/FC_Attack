@@ -1,8 +1,10 @@
 
 # FC-Attack: Jailbreaking Multimodal Large Language Models via Auto-Generated Flowcharts
 
+<h2 align="center">EMNLP 2025 Findings</h2>
+
 <p align="center">
-  <strong>EMNLP 2025 Findings</strong>
+  <img src=".image/CompareFigure.pdf" alt="Project Workflow" width="700"/>
 </p>
 
 
