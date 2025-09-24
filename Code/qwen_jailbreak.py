@@ -9,24 +9,18 @@ from tqdm import tqdm
 import multiprocessing as mp
 
 # CONFIG
-image_folder_path = "/data_sda/zzy/emnlp2025/Advbench_images/folder_4"
-model_checkpoint_path = "/data1/zzy/Qwen2-VL-7B-Instruct"
-output_json_path = "/data_sda/zzy/emnlp2025/ge_advbench_qwen.json"
+image_folder_path = "your_image_folder"
+model_checkpoint_path = "./data/Qwen2-VL-7B-Instruct"
+output_json_path = "./qwen.json"
 os.makedirs(os.path.dirname(output_json_path), exist_ok=True)
-
-# 指定使用的 GPU (修改为只使用0,1,2三张卡)
 gpu_ids = [4, 5, 6]
 
-# 获取图像路径列表
 image_files = [f for f in os.listdir(image_folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
 image_paths = [os.path.join(image_folder_path, f) for f in image_files]
 
-# 平均分配图像列表为3份
 def split_list(lst, n):
     k, m = divmod(len(lst), n)
     return [lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]
-
-# 每个进程的工作函数
 def worker(gpu_index, image_subset, return_list):
     actual_gpu = gpu_ids[gpu_index]
     os.environ["CUDA_VISIBLE_DEVICES"] = str(actual_gpu)
@@ -40,7 +34,7 @@ def worker(gpu_index, image_subset, return_list):
     model = Qwen2VLForConditionalGeneration.from_pretrained(
         model_checkpoint_path,
         torch_dtype="auto",
-        device_map={"": "cuda:0"}  # 当前进程看到的唯一 GPU 是 cuda:0
+        device_map={"": "cuda:0"}  
     )
 
     def prepare_inputs(messages):
@@ -93,7 +87,7 @@ def worker(gpu_index, image_subset, return_list):
         return generate_answer_from_input(inputs)
 
     results = []
-    print(f"[GPU {actual_gpu}] 开始处理 {len(image_subset)} 张图像")
+    print(f"[GPU {actual_gpu}] is processing {len(image_subset)} image")
     for image_path in tqdm(image_subset, desc=f"GPU {actual_gpu}"):
         try:
             answer = process_image_description(image_path)
@@ -104,39 +98,34 @@ def worker(gpu_index, image_subset, return_list):
         except Exception as e:
             print(f"[GPU {actual_gpu}] Error on {image_path}: {e}")
     
-    print(f"[GPU {actual_gpu}] 完成处理 {len(results)} 张图像")
+    print(f"[GPU {actual_gpu}] finished {len(results)} images")
     return_list.extend(results)
 
-# 主函数入口
 if __name__ == "__main__":
-    mp.set_start_method("spawn", force=True)  # 必须使用 spawn 模式以避免 CUDA 错误
+    mp.set_start_method("spawn", force=True)  
 
-    print(f"总共找到 {len(image_paths)} 张图像")
+    print(f"total {len(image_paths)} images")
     
-    # 将图像分为3份，分别分配给3张GPU
-    num_gpus = len(gpu_ids)  # 现在是3
+    num_gpus = len(gpu_ids)  
     image_subsets = split_list(image_paths, num_gpus)
     
-    # 打印每个GPU分配到的图像数量
     for i, subset in enumerate(image_subsets):
-        print(f"GPU {gpu_ids[i]} 分配到 {len(subset)} 张图像")
+        print(f"GPU {gpu_ids[i]} is to {len(subset)} images")
     
     manager = mp.Manager()
     return_list = manager.list()
     processes = []
 
-    # 启动3个进程，分别对应GPU 0,1,2
     for i in range(num_gpus):
         p = mp.Process(target=worker, args=(i, image_subsets[i], return_list))
         p.start()
         processes.append(p)
 
-    # 等待所有进程完成
+
     for p in processes:
         p.join()
 
-    # 保存 JSON 结果
-    print(f"所有GPU处理完成，共处理了 {len(return_list)} 张图像")
+    print(f"All finished，total {len(return_list)} images")
     with open(output_json_path, "w", encoding="utf-8") as f:
         json.dump(list(return_list), f, indent=4, ensure_ascii=False)
 
