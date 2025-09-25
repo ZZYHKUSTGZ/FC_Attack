@@ -26,6 +26,6 @@
 
 5. **Flowchart-based Jailbreak Attack**  
    - Combine the generated flowcharts with text prompt to perform **jailbreak attacks** on target models.
-   - The code such as `FC_Attack/Code/llava.py`
+   - The code such as `FC_Attack/Code/llava_jailbreak.py`
 
 
