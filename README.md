@@ -19,7 +19,6 @@
 
 3. **Adversarial Data Construction**  
    - Based on the fine-tuned model, generate QA pairs for **50 topics from AdvBench**.
-   - The 50 topics is based on
 
 4. **Flowchart Generation**  
    - Convert the generated QA pairs into flowcharts of various layouts (**vertical / horizontal / S-shaped**) for experimental comparison and visualization.  
