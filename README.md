@@ -4,6 +4,10 @@
 <h2 align="center">EMNLP 2025 Findings</h2>
 
 <p align="center">
+  <a href="https://arxiv.org/pdf/2502.21059?" target="_blank">📄 Read the Paper</a>
+</p>
+
+<p align="center">
   <img src="./image/CompareFigure.png" alt="Project Workflow" width="700"/>
 </p>
 
